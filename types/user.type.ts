@@ -1,4 +1,4 @@
-import { Document, ObjectId } from "mongoose";
+import { Document, ObjectId, Model } from "mongoose";
 
 export interface UserTypes extends Document {
   username: string;
@@ -7,7 +7,7 @@ export interface UserTypes extends Document {
   role: "MDP" | "user";
 }
 
-export interface UserMethodTypes extends Document {
+export interface UserMethodTypes {
   verifyPassword: (password: string) => boolean;
 }
 

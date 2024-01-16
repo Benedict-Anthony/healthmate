@@ -1,8 +1,8 @@
 import mongoose from "mongoose";
-import { UserMethodTypes, UserTypes } from "../types/user.type";
+import { UserTypes } from "../types/user.type";
 import bycript from "bcryptjs";
 
-const userSchema = new mongoose.Schema<UserTypes, {}, UserMethodTypes>(
+const userSchema = new mongoose.Schema<UserTypes>(
   {
     username: {
       type: String,
@@ -42,10 +42,6 @@ userSchema.pre("save", function (next) {
   next();
 });
 
-userSchema.method("verifyPassword", function verifyPassword(password: string) {
-  const isValid = bycript.compareSync(password, this.password);
-  return isValid;
-});
-const User = mongoose.model("User", userSchema);
+const User = mongoose.model<UserTypes>("User", userSchema);
 
 export default User;

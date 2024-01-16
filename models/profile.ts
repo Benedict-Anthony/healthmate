@@ -4,7 +4,9 @@ import { UserProfileTypes } from "../types/user.type";
 const profileSchema = new mongoose.Schema<UserProfileTypes>({
   user: {
     type: mongoose.SchemaTypes.ObjectId,
+    ref: "User",
     required: [true, "this field is required"],
+    unique: true,
   },
   firstName: {
     type: String,
@@ -30,7 +32,9 @@ const profileSchema = new mongoose.Schema<UserProfileTypes>({
 
   address: {
     type: mongoose.SchemaTypes.ObjectId,
-    required: [true, "this field is required"],
+    ref: "Address",
+    unique: true,
+    // required: [true, "this field is required"],
   },
 });
 

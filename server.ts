@@ -8,11 +8,14 @@ import { errorHandler } from "./middleware/errorHandler";
 import serviceRouter from "./routes/services";
 import bookingsRouter from "./routes/bookings";
 import profileRouter from "./routes/profile";
+import cookieParser from "cookie-parser";
 
 dontenv.config({ path: ".env.local" });
 
 const PORT = process.env.PORT || 5000;
 const app: Express = express();
+
+app.use(cookieParser());
 
 app.get("/", (req, res) => {
   res.status(200).json({ msg: "Benedict making bigger applications" });

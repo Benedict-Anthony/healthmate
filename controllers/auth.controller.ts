@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import expressAsyncHandler from "express-async-handler";
 import User from "../models/user";
 import { setCookie } from "../middleware/setCookie";
+import { verifyPassword } from "../lib/verifyPassword";
 
 export const loginHandler = expressAsyncHandler(
   async (req: Request, res: Response) => {
@@ -11,7 +12,7 @@ export const loginHandler = expressAsyncHandler(
       res.status(400).json({ msg: "Invalid email or password" });
       return;
     }
-    const validPassword = user.verifyPassword(body.password);
+    const validPassword = verifyPassword(body.password, user.password);
     if (!validPassword) {
       res.status(400).json({ msg: "Invalid email or password" });
       return;

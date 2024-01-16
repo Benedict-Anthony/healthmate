@@ -1,20 +1,16 @@
 import { Response, Request, NextFunction, Errback } from "express";
 
-type ErrorType = {
-  message: string;
-  path: string;
-};
-
 export const errorHandler = (
   err: Errback | any,
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
+  console.log(err);
   switch (err.name) {
     case "MongoServerError":
       if (err.code === 11000) {
-        res.status(400).json({ msg: `username or email already exist` });
+        res.status(400).json({ msg: `duplicate key error collection` });
       }
       return;
 
@@ -27,7 +23,6 @@ export const errorHandler = (
       const errors = Object.values(err.errors).map(
         (error: any) => `${error.path} is required`
       );
-      console.log(errors);
       res.status(400).json(errors);
       return;
 
@@ -36,9 +31,7 @@ export const errorHandler = (
       return;
 
     case "CastError":
-      console.log(err);
       res.status(400).json({ msg: `Detail - Not found` });
-
       return;
     default:
       next(err);

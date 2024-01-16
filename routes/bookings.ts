@@ -6,14 +6,19 @@ import {
   retrievBookings,
   updateBooking,
 } from "../controllers/booking.controller";
+import protect from "../middleware/authMiddleWare";
 
 const bookingsRouter: Router = express.Router();
 
-bookingsRouter.route("").get(retrievBookings).post(createBooking);
+bookingsRouter
+  .route("")
+  .get(protect, retrievBookings)
+  .post(protect, createBooking);
+
 bookingsRouter
   .route("/:id")
-  .get(retrievBookingDetail)
-  .delete(deleteBooking)
-  .put(updateBooking);
+  .get(protect, retrievBookingDetail)
+  .delete(protect, deleteBooking)
+  .put(protect, updateBooking);
 
 export default bookingsRouter;
